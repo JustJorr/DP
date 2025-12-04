@@ -3,82 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Layar Acak UI</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
-        /* Sidebar Full Height */
-        .sidebar {
-            height: 100vh;
+        body {
+            background-color: #f5f2f1;
         }
-        .nav-link {
+        /* Sidebar */
+        .sidebar {
+            width: 220px;
+            height: 100vh;
+            background: #1f1f1f;
+            border-radius: 0px;
+            padding: 20px;
+        }
+        .sidebar-logo {
+            background: #3a3a3a;
+            color: white;
+            border-radius: 15px;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .menu-icon {
+            font-size: 32px;
+            color: white;
+            cursor: pointer;
+            margin: 20px 0;
+        }
+        /* Search bar */
+        .search-bar {
+            background: #eee9e8;
+            border-radius: 40px;
+            height: 50px;
+            border: none;
+            padding-left: 20px;
             font-size: 18px;
         }
-        .nav-link i {
-            margin-right: 10px; /* Jarak icon dan teks */
+        .search-wrapper {
+            position: relative;
+            margin: 0 auto;
+        }
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: #8a8989;
+        }
+
+        /* Card */
+        .item-card {
+            width: 100%;
+            height: 180px;
+            background: #eee9e8;
+            border-radius: 25px;
         }
     </style>
 </head>
-<body class="d-flex">
+<body>
 
-    <!-- SIDEBAR -->
-    <nav class="sidebar bg-dark text-white p-3">
-        <h3 class="text-white mb-4">MyWebsite</h3>
+<div class="d-flex">
 
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link text-white" href="#">
-                    <i class="bi bi-house-door-fill fs-2"></i> Home
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="#">
-                    <i class="bi bi-info-circle-fill fs-2"></i> About
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="#">
-                    <i class="bi bi-gear-fill fs-2"></i> Services
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="#">
-                    <i class="bi bi-telephone-fill fs-2"></i> Contact
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <!-- Sidebar -->
+    <div class="sidebar d-flex flex-column align-items-center">
+        <div class="sidebar-logo">LAYAR <span style="color:#ff2a2a">ACAK</span></div>
 
-    <!-- MAIN CONTENT -->
-    <div class="flex-grow-1">
+        <i class="bi bi-house-door-fill menu-icon"></i>
+        <i class="bi bi-star-fill menu-icon"></i>
+        <i class="bi bi-globe menu-icon"></i>
+    </div>
 
-        <!-- HERO -->
-        <section class="bg-light py-5 text-center">
-            <div class="container">
-                <h1 class="display-4 fw-bold">Selamat Datang di Welcome</h1>
-                <p class="lead">Ini adalah contoh halaman depan menggunakan Bootstrap 5.</p>
-                <a href="#" class="btn btn-primary btn-lg">Mulai Sekarang</a>
-            </div>
-        </section>
+    <!-- Content -->
+    <div class="container-fluid p-4">
 
-        <div class="container my-5">
-            <h2 class="mb-3">Film Viral</h2>
-            <p>Mau nonton yang viral ya...</p>
+        <!-- Search bar -->
+        <div class="search-wrapper mb-4" style="max-width: 600px;">
+            <input type="text" class="form-control search-bar" placeholder="Cari...">
+            <i class="bi bi-search search-icon"></i>
         </div>
 
-        <footer class="bg-dark text-white text-center py-3">
-            <p class="mb-0">© 2025 MyWebsite. All Rights Reserved.</p>
-        </footer>
+        <!-- Grid atas -->
+        <div class="row g-4 mb-4">
+            <div class="col-6 col-md-3"><div class="item-card"></div></div>
+            <div class="col-6 col-md-3"><div class="item-card"></div></div>
+            <div class="col-6 col-md-3"><div class="item-card"></div></div>
+            <div class="col-6 col-md-3"><div class="item-card"></div></div>
+        </div>
+
+        <!-- Batas -->
+        <hr style="border: 2px solid #eee9e8;">
+
+        <!-- Grid bawah -->
+        <div class="row g-4 mt-4">
+            <div class="col-6 col-md-3"><div class="item-card"></div></div>
+            <div class="col-6 col-md-3"><div class="item-card"></div></div>
+            <div class="col-6 col-md-3"><div class="item-card"></div></div>
+            <div class="col-6 col-md-3"><div class="item-card"></div></div>
+        </div>
 
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</div>
 
 </body>
 </html>

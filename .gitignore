@@ -1,1 +1,9 @@
 venv/
+backend/.env.example
+*.pyc
+__pycache__/
+*.db
+.env
+qa.db
+*.sqlite3
+.venv/

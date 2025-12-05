@@ -1,36 +1,1079 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Q&A – Question</title>
+    <title>TanyaJawab</title>
 
+    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #FF6B35;  /* Oranye */
+            --secondary-color: #333333; /* Hitam gelap */
+            --accent-color: #FFA726;   /* Oranye lebih terang */
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --light-text: #666666;
+            --border-color: #e0e0e0;
+            --success-color: #28a745;
+            --card-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark-text);
+            background-color: #fafafa;
+            line-height: 1.6;
+        }
+        
+        /* Navbar */
+        .navbar {
+            background-color: var(--secondary-color) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 0.8rem 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color) !important;
+            font-size: 1.5rem;
+        }
+        
+        .navbar-brand i {
+            color: var(--primary-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e55a2b;
+            border-color: #e55a2b;
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        
+        /* Main Content */
+        .main-container {
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* Question Header */
+        .question-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .question-title {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+        
+        .question-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .question-stats {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .question-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .question-tag {
+            background-color: #FFF3E0;
+            color: var(--primary-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        .question-tag:hover {
+            background-color: #FFE0B2;
+        }
+        
+        .question-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .btn-action {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        
+        /* Content Cards */
+        .content-card {
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+            background-color: white;
+        }
+        
+        .content-card .card-body {
+            padding: 1.25rem;
+        }
+        
+        /* Question/Answer Content */
+        .post-content {
+            line-height: 1.7;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .post-content pre {
+            background-color: #f5f5f5;
+            color: var(--dark-text);
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .post-content code {
+            background-color: #f5f5f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #d63384;
+        }
+        
+        .post-content img {
+            max-width: 100%;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+        
+        /* Voting System */
+        .vote-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-right: 1rem;
+            margin-right: 1rem;
+            border-right: 1px solid var(--border-color);
+            min-width: 50px;
+        }
+        
+        .vote-btn {
+            background: none;
+            border: none;
+            color: var(--light-text);
+            font-size: 1.2rem;
+            padding: 0.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+        
+        .vote-btn:hover {
+            color: var(--primary-color);
+            background-color: rgba(255, 107, 53, 0.1);
+        }
+        
+        .vote-count {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0.3rem 0;
+            color: var(--dark-text);
+        }
+        
+        .accepted-badge {
+            background-color: var(--success-color);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        /* User Info */
+        .user-info-card {
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            padding: 0.75rem;
+            margin-top: 1rem;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .user-details {
+            flex-grow: 1;
+        }
+        
+        .username {
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 0.1rem;
+            font-size: 0.95rem;
+        }
+        
+        .user-reputation {
+            color: var(--light-text);
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .badge-expert {
+            background-color: #FFF3E0;
+            color: #FF6B35;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+            font-weight: 600;
+        }
+        
+        /* Answer Section */
+        .answers-header {
+            margin: 2rem 0 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .answer-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        /* Comment Section */
+        .comments-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .comment {
+            display: flex;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .comment:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .comment-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+        
+        .comment-content {
+            flex-grow: 1;
+        }
+        
+        .comment-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+            font-size: 0.8rem;
+        }
+        
+        .comment-author {
+            font-weight: 500;
+            color: var(--dark-text);
+        }
+        
+        .comment-time {
+            color: var(--light-text);
+        }
+        
+        /* Sidebar */
+        .sidebar-card {
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+            background-color: white;
+        }
+        
+        .sidebar-card .card-body {
+            padding: 1.25rem;
+        }
+        
+        .sidebar-title {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .related-question {
+            display: flex;
+            align-items: flex-start;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .related-question:last-child {
+            border-bottom: none;
+        }
+        
+        .related-question a {
+            color: var(--dark-text);
+            text-decoration: none;
+            font-weight: 500;
+            line-height: 1.4;
+            font-size: 0.9rem;
+        }
+        
+        .related-question a:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Answer Form */
+        .answer-form-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            margin-top: 2rem;
+        }
+        
+        .form-header {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .answer-textarea {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            min-height: 150px;
+            font-family: inherit;
+            font-size: 1rem;
+            line-height: 1.6;
+            width: 100%;
+            resize: vertical;
+        }
+        
+        .answer-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .vote-container {
+                flex-direction: row;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding-right: 0;
+                padding-bottom: 1rem;
+                margin-bottom: 1rem;
+                margin-right: 0;
+                min-width: auto;
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .vote-btn {
+                margin: 0 0.5rem;
+            }
+            
+            .vote-count {
+                margin: 0 1rem;
+            }
+            
+            .question-meta {
+                gap: 1rem;
+            }
+            
+            .question-stats {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .main-container {
+                margin-top: 1rem;
+            }
+        }
+    </style>
 </head>
 
-<body class="bg-light">
-
-    <nav class="navbar navbar-light bg-white shadow-sm">
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand fw-bold text-secondary" href="homepage.html">← Back</a>
+            <a class="navbar-brand" href="homepage.html"><i class="fas fa-question-circle me-2"></i>Q&A HUB</a>
+            
+            <!-- User Menu -->
+            <div class="d-flex align-items-center">
+                <a href="homepage.html" class="btn btn-primary me-2"><i class="fas fa-home me-2"></i>Home</a>
+                <div class="dropdown">
+                    <button class="btn btn-outline-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://ui-avatars.com/api/?name=Dewa&background=FF6B35&color=fff&size=28" class="rounded-circle me-1" alt="User">
+                        Dewa
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user me-2"></i>Profil Saya</a></li>
+                        <li><a class="dropdown-item" href="homepage.html"><i class="fas fa-home me-2"></i>Home</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-comments me-2"></i>Jawaban Saya</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Pengaturan</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Keluar</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </nav>
 
-    <div class="container mt-4">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body">
-                <h3 class="text-secondary">Bagaimana cara menggunakan Bootstrap?</h3>
-                <p class="text-muted">Posted by Dewa • 2 hours ago</p>
+    <!-- MAIN CONTENT -->
+    <div class="container main-container">
+        <div class="row">
+            <!-- Main Content Column -->
+            <div class="col-lg-8">
+                <!-- Question Header -->
+                <div class="question-header">
+                    <h1 class="question-title">Bagaimana cara menggunakan Bootstrap untuk membuat website responsif?</h1>
+                    
+                    <div class="question-meta">
+                        <div class="question-stats">
+                            <div class="stat-item">
+                                <i class="far fa-clock"></i>
+                                <span>Ditanyakan 2 jam yang lalu</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="far fa-eye"></i>
+                                <span>1,247 dilihat</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="far fa-comment"></i>
+                                <span>5 jawaban</span>
+                            </div>
+                        </div>
+                        
+                        <div class="question-actions">
+                            <button class="btn btn-outline-primary btn-action">
+                                <i class="far fa-bookmark"></i> Simpan
+                            </button>
+                            <button class="btn btn-outline-primary btn-action">
+                                <i class="fas fa-share"></i> Bagikan
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="question-tags">
+                        <a href="#" class="question-tag">bootstrap</a>
+                        <a href="#" class="question-tag">css-framework</a>
+                        <a href="#" class="question-tag">responsive-design</a>
+                        <a href="#" class="question-tag">frontend</a>
+                        <a href="#" class="question-tag">web-development</a>
+                    </div>
+                </div>
+                
+                <!-- Question Content -->
+                <div class="content-card">
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Voting Column -->
+                            <div class="col-auto">
+                                <div class="vote-container">
+                                    <button class="vote-btn">
+                                        <i class="fas fa-chevron-up"></i>
+                                    </button>
+                                    <div class="vote-count">42</div>
+                                    <button class="vote-btn">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Question Content Column -->
+                            <div class="col">
+                                <div class="post-content">
+                                    <p>Saya baru memulai proyek web dan ingin menggunakan Bootstrap 5, tapi saya tidak yakin tentang praktik terbaiknya. Saya pernah menggunakannya sebelumnya tapi layout saya terkadang rusak di ukuran layar tertentu.</p>
+                                    
+                                    <p>Secara spesifik, saya ingin tahu:</p>
+                                    
+                                    <ol>
+                                        <li>Apa cara paling efisien untuk menyertakan Bootstrap dalam proyek?</li>
+                                        <li>Bagaimana cara menggunakan sistem grid untuk layout yang kompleks?</li>
+                                        <li>Apakah ada kesalahan umum yang harus dihindari?</li>
+                                        <li>Bagaimana cara mengkustomisasi Bootstrap tanpa merusak responsivitas?</li>
+                                    </ol>
+                                    
+                                    <p>Ini cara saya biasanya menyertakan Bootstrap:</p>
+                                    
+                                    <pre><code>&lt;!-- Bootstrap CSS --&gt;
+&lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
 
-                <hr>
+&lt;!-- Bootstrap JS Bundle --&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;</code></pre>
+                                    
+                                    <p>Tapi saya dengar ada pendekatan yang lebih baik untuk situs produksi. Haruskah saya menggunakan npm atau mengunduh file secara lokal?</p>
+                                    
+                                    <p>Nasihat dari pengguna Bootstrap yang berpengalaman akan sangat dihargai!</p>
+                                </div>
+                                
+                                <!-- Question Actions -->
+                                <div class="d-flex justify-content-between align-items-center mt-4">
+                                    <div class="question-actions">
+                                        <button class="btn btn-outline-primary btn-action">
+                                            <i class="far fa-comment"></i> Komentar
+                                        </button>
+                                        <button class="btn btn-outline-primary btn-action">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- User Info -->
+                                    <div class="user-info-card">
+                                        <div class="user-info">
+                                            <img src="https://ui-avatars.com/api/?name=Dewa&background=333333&color=FF6B35&size=36" alt="Dewa" class="user-avatar">
+                                            <div class="user-details">
+                                                <div class="username">Dewa <span class="badge-expert">Expert</span></div>
+                                                <div class="user-reputation">
+                                                    <i class="fas fa-medal" style="color: var(--primary-color);"></i>
+                                                    <span>2,847 reputasi</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Comments Section -->
+                                <div class="comments-section">
+                                    <div class="comment">
+                                        <img src="https://ui-avatars.com/api/?name=Sari&background=FF6B35&color=fff&size=28" alt="Sari" class="comment-avatar">
+                                        <div class="comment-content">
+                                            <div class="comment-meta">
+                                                <span class="comment-author">Sari</span>
+                                                <span class="comment-time">1 jam yang lalu</span>
+                                            </div>
+                                            <p>Apakah kamu sudah mempertimbangkan menggunakan template starter Bootstrap? Itu sudah menyertakan meta tag dan pengaturan viewport yang tepat.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="comment">
+                                        <img src="https://ui-avatars.com/api/?name=Alex&background=666666&color=fff&size=28" alt="Alex" class="comment-avatar">
+                                        <div class="comment-content">
+                                            <div class="comment-meta">
+                                                <span class="comment-author">Alex</span>
+                                                <span class="comment-time">45 menit yang lalu</span>
+                                            </div>
+                                            <p>Untuk produksi, saya sarankan menggunakan npm dan mengimpor hanya komponen yang kamu butuhkan. Ini mengurangi ukuran bundle secara signifikan.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <a href="#" class="text-primary small">
+                                        <i class="fas fa-plus me-1"></i> Tambah komentar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Answers Header -->
+                <div class="answers-header">
+                    <h3 class="answer-count">5 Jawaban</h3>
+                </div>
+                
+                <!-- Answer 1 (Accepted) -->
+                <div class="content-card" style="border-left: 3px solid var(--success-color);">
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Voting Column -->
+                            <div class="col-auto">
+                                <div class="vote-container">
+                                    <button class="vote-btn">
+                                        <i class="fas fa-chevron-up"></i>
+                                    </button>
+                                    <div class="vote-count">24</div>
+                                    <button class="vote-btn">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="accepted-badge" title="Jawaban Diterima">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Answer Content Column -->
+                            <div class="col">
+                                <div class="post-content">
+                                    <p>Pertanyaan yang bagus! Ini pendekatan saya untuk menggunakan Bootstrap secara efektif:</p>
+                                    
+                                    <h5>1. Menyertakan Bootstrap</h5>
+                                    <p>Untuk situs produksi, saya sarankan menggunakan npm/yarn dan mengimpor hanya yang kamu butuhkan:</p>
+                                    
+                                    <pre><code>npm install bootstrap</code></pre>
+                                    
+                                    <p>Kemudian di file SCSS utama kamu:</p>
+                                    
+                                    <pre><code>// Kustomisasi variabel dulu
+                                                                                $primary: #FF6B35;
 
-                <h5 class="text-secondary">Jawaban</h5>
-                <p class="text-dark">
-                    Anda bisa menggunakan Bootstrap dengan menambahkan CDN pada bagian &lt;head&gt; lalu gunakan class yang tersedia.
-                </p>
+                                                                                // Kemudian impor Bootstrap
+                                                                                @import "bootstrap/scss/bootstrap";</code></pre>
+                                    
+                                    <h5>2. Praktik Terbaik Sistem Grid</h5>
+                                    <p>Selalu mulai mobile-first. Gunakan class <code>.col-*</code> tanpa breakpoints untuk mobile, lalu tambahkan class responsif:</p>
+                                    
+                                    <pre><code>&lt;div class="row"&gt;
+  &lt;div class="col-12 col-md-8"&gt;Konten utama&lt;/div&gt;
+  &lt;div class="col-12 col-md-4"&gt;Sidebar&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                                    
+                                    <h5>3. Kesalahan Umum yang Harus Dihindari</h5>
+                                    <ul>
+                                        <li>Jangan menempatkan row di dalam row (selalu gunakan column di antaranya)</li>
+                                        <li>Hindari meng-override style Bootstrap dengan <code>!important</code></li>
+                                        <li>Gunakan class container dengan tepat (container vs container-fluid)</li>
+                                    </ul>
+                                    
+                                    <h5>4. Kustomisasi</h5>
+                                    <p>Buat file SCSS kustom di mana kamu meng-override variabel Bootstrap <strong>sebelum</strong> mengimpor Bootstrap:</p>
+                                    
+                                    <pre><code>// custom.scss
+$theme-colors: (
+  "primary": #FF6B35,
+  "secondary": #333333,
+  "success": #28a745
+);
+
+@import "bootstrap/scss/bootstrap";</code></pre>
+                                    
+                                    <p>Pendekatan ini menjaga kustomisasi kamu tetap terorganisir dan mudah dipelihara.</p>
+                                </div>
+                                
+                                <!-- Answer Actions & User Info -->
+                                <div class="d-flex justify-content-between align-items-center mt-4">
+                                    <div class="question-actions">
+                                        <button class="btn btn-outline-primary btn-action">
+                                            <i class="far fa-comment"></i> 3
+                                        </button>
+                                        <button class="btn btn-outline-primary btn-action">
+                                            <i class="fas fa-share"></i> Bagikan
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="user-info-card">
+                                        <div class="user-info">
+                                            <img src="https://ui-avatars.com/api/?name=Maria&background=28a745&color=fff&size=36" alt="Maria" class="user-avatar">
+                                            <div class="user-details">
+                                                <div class="username">Maria <span class="badge-expert">Expert</span></div>
+                                                <div class="user-reputation">
+                                                    <i class="fas fa-medal" style="color: var(--primary-color);"></i>
+                                                    <span>5,421 reputasi</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Comments on Answer -->
+                                <div class="comments-section">
+                                    <div class="comment">
+                                        <img src="https://ui-avatars.com/api/?name=Tom&background=f59e0b&color=fff&size=28" alt="Tom" class="comment-avatar">
+                                        <div class="comment-content">
+                                            <div class="comment-meta">
+                                                <span class="comment-author">Tom</span>
+                                                <span class="comment-time">30 menit yang lalu</span>
+                                            </div>
+                                            <p>Jawaban yang bagus! Saya tambahkan bahwa menggunakan class utility Bootstrap untuk spacing (m-, p-) bisa mempercepat pengembangan.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="comment">
+                                        <img src="https://ui-avatars.com/api/?name=Dewa&background=333333&color=FF6B35&size=28" alt="Dewa" class="comment-avatar">
+                                        <div class="comment-content">
+                                            <div class="comment-meta">
+                                                <span class="comment-author">Dewa (Penanya)</span>
+                                                <span class="comment-time">15 menit yang lalu</span>
+                                            </div>
+                                            <p>Terima kasih Maria! Tips kustomisasi SCSS persis yang saya butuhkan. Menandai ini sebagai jawaban yang diterima.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <a href="#" class="text-primary small">
+                                        <i class="fas fa-plus me-1"></i> Tambah komentar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Answer 2 -->
+                <div class="content-card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-auto">
+                                <div class="vote-container">
+                                    <button class="vote-btn">
+                                        <i class="fas fa-chevron-up"></i>
+                                    </button>
+                                    <div class="vote-count">12</div>
+                                    <button class="vote-btn">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="col">
+                                <div class="post-content">
+                                    <p>Saya telah menggunakan Bootstrap selama 5+ tahun. Saran utama saya:</p>
+                                    
+                                    <p>Gunakan dokumentasi resmi dengan serius. Bootstrap 5 memiliki contoh yang sangat baik untuk setiap komponen. Juga, jangan lupa untuk memeriksa kompatibilitas browser jika kamu perlu mendukung browser lama.</p>
+                                    
+                                    <p>Untuk layout yang kompleks, pertimbangkan menggunakan utility flex Bootstrap bersamaan dengan sistem grid untuk kontrol yang lebih halus.</p>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center mt-4">
+                                    <div class="question-actions">
+                                        <button class="btn btn-outline-primary btn-action">
+                                            <i class="far fa-comment"></i> 1
+                                        </button>
+                                        <button class="btn btn-outline-primary btn-action">
+                                            <i class="fas fa-share"></i> Bagikan
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="user-info-card">
+                                        <div class="user-info">
+                                            <img src="https://ui-avatars.com/api/?name=Alex&background=666666&color=fff&size=36" alt="Alex" class="user-avatar">
+                                            <div class="user-details">
+                                                <div class="username">Alex</div>
+                                                <div class="user-reputation">
+                                                    <i class="fas fa-medal" style="color: var(--primary-color);"></i>
+                                                    <span>1,845 reputasi</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Your Answer Form -->
+                <div class="answer-form-container">
+                    <div class="form-header">
+                        <h4>Pertanyaan Anda</h4>
+                        <p class="text-muted">Mohon berikan jawaban yang detail dan sertakan contoh untuk membantu orang lain memahami solusi Anda.</p>
+                    </div>
+                    
+                    <form id="answerForm">
+                        <textarea class="answer-textarea form-control" placeholder="Tulis jawaban Anda di sini... Gunakan kode contoh dengan menempatkannya di antara backticks (`)." rows="8"></textarea>
+                        
+                        <div class="mt-3">
+                            <div class="form-text mb-3">
+                                <i class="fas fa-info-circle" style="color: var(--primary-color);"></i>
+                                <span class="ms-1">Anda dapat menggunakan <strong>**tebal**</strong>, <em>*miring*</em>, dan <code>`kode`</code> dalam jawaban Anda.</span>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="notifyMe">
+                                    <label class="form-check-label" for="notifyMe">
+                                        Beri tahu saya tentang jawaban baru untuk pertanyaan ini
+                                    </label>
+                                </div>
+                                
+                                <div>
+                                    <button type="submit" class="btn btn-primary">Kirim Pertanyaan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Sidebar Column -->
+            <div class="col-lg-4">
+                <!-- Related Questions -->
+                <div class="sidebar-card">
+                    <div class="card-body">
+                        <h5 class="sidebar-title">Pertanyaan Terkait</h5>
+                        
+                        <div class="related-question">
+                            <a href="#">Apa yang baru di Bootstrap 5 dibandingkan Bootstrap 4?</a>
+                        </div>
+                        <div class="related-question">
+                            <a href="#">Bagaimana mengkustomisasi warna tema Bootstrap secara efektif?</a>
+                        </div>
+                        <div class="related-question">
+                            <a href="#">Bootstrap vs Tailwind CSS: Mana yang harus dipilih?</a>
+                        </div>
+                        <div class="related-question">
+                            <a href="#">Bagaimana membuat kartu Bootstrap responsif di mobile?</a>
+                        </div>
+                        <div class="related-question">
+                            <a href="#">Praktik terbaik untuk form dan validasi Bootstrap</a>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <a href="#" class="text-primary small">Lihat semua pertanyaan terkait</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stats -->
+                <div class="sidebar-card">
+                    <div class="card-body">
+                        <h5 class="sidebar-title">Statistik Pertanyaan</h5>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <span>Dilihat</span>
+                                <span class="fw-bold">1,247</span>
+                            </div>
+                            <div class="progress" style="height: 6px;">
+                                <div class="progress-bar" style="background-color: var(--primary-color); width: 85%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <span>Jawaban</span>
+                                <span class="fw-bold">5</span>
+                            </div>
+                            <div class="progress" style="height: 6px;">
+                                <div class="progress-bar bg-success" style="width: 60%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <span>Vote</span>
+                                <span class="fw-bold">42</span>
+                            </div>
+                            <div class="progress" style="height: 6px;">
+                                <div class="progress-bar bg-info" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-users text-muted me-2"></i>
+                                <span class="small">5 orang mengikuti pertanyaan ini</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-eye text-muted me-2"></i>
+                                <span class="small">Dilihat 127 kali hari ini</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bootstrap Resources -->
+                <div class="sidebar-card">
+                    <div class="card-body">
+                        <h5 class="sidebar-title">Sumber Daya Bootstrap</h5>
+                        
+                        <div class="mb-3">
+                            <a href="#" class="d-flex align-items-center text-decoration-none text-dark mb-2">
+                                <i class="fas fa-external-link-alt" style="color: var(--primary-color); margin-right: 0.5rem;"></i>
+                                <span>Dokumentasi Resmi Bootstrap</span>
+                            </a>
+                            <a href="#" class="d-flex align-items-center text-decoration-none text-dark mb-2">
+                                <i class="fab fa-github text-dark me-2"></i>
+                                <span>Repository GitHub Bootstrap</span>
+                            </a>
+                            <a href="#" class="d-flex align-items-center text-decoration-none text-dark">
+                                <i class="fas fa-video text-danger me-2"></i>
+                                <span>Kursus Kilat Bootstrap 5</span>
+                            </a>
+                        </div>
+                        
+                        <div class="alert alert-warning mt-3">
+                            <small>
+                                <i class="fas fa-lightbulb me-1"></i>
+                                <strong>Tips:</strong> Selalu periksa versi Bootstrap yang Anda gunakan karena class mungkin berbeda antara versi.
+                            </small>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2023 TanyaJawab. Komunitas developer Indonesia.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-white me-3">Kebijakan Privasi</a>
+                    <a href="#" class="text-white">Syarat Layanan</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Voting functionality
+            const voteButtons = document.querySelectorAll('.vote-btn');
+            voteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const voteCount = this.parentElement.querySelector('.vote-count');
+                    const isUpvote = this.querySelector('.fa-chevron-up');
+                    
+                    if (voteCount) {
+                        if (isUpvote) {
+                            // Upvote clicked
+                            const currentCount = parseInt(voteCount.textContent);
+                            voteCount.textContent = currentCount + 1;
+                            this.style.color = '#FF6B35';
+                        } else {
+                            // Downvote clicked
+                            const currentCount = parseInt(voteCount.textContent);
+                            voteCount.textContent = currentCount - 1;
+                            this.style.color = '#FF6B35';
+                        }
+                        
+                        // Disable button after voting
+                        this.disabled = true;
+                        this.style.cursor = 'not-allowed';
+                    }
+                });
+            });
+            
+            // Form submission
+            const answerForm = document.getElementById('answerForm');
+            if (answerForm) {
+                answerForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const answerText = this.querySelector('.answer-textarea').value;
+                    
+                    if (answerText.trim().length < 20) {
+                        alert('Mohon berikan jawaban yang lebih detail (minimal 20 karakter).');
+                        return;
+                    }
+                    
+                    // In a real app, you would submit to server here
+                    alert('Jawaban Anda telah dikirim! Akan muncul setelah moderasi.');
+                    this.reset();
+                });
+            }
+            
+            // Simple formatting buttons (simulated)
+            const answerTextarea = document.querySelector('.answer-textarea');
+            
+            // Add event listener for Ctrl+B and Ctrl+I for formatting
+            answerTextarea.addEventListener('keydown', function(e) {
+                const start = this.selectionStart;
+                const end = this.selectionEnd;
+                const selectedText = this.value.substring(start, end);
+                
+                if (e.ctrlKey || e.metaKey) {
+                    let formattedText = '';
+                    
+                    switch(e.key) {
+                        case 'b':
+                            e.preventDefault();
+                            formattedText = '**' + selectedText + '**';
+                            this.value = this.value.substring(0, start) + formattedText + this.value.substring(end);
+                            this.focus();
+                            this.setSelectionRange(start + 2, start + 2 + selectedText.length);
+                            break;
+                            
+                        case 'i':
+                            e.preventDefault();
+                            formattedText = '*' + selectedText + '*';
+                            this.value = this.value.substring(0, start) + formattedText + this.value.substring(end);
+                            this.focus();
+                            this.setSelectionRange(start + 1, start + 1 + selectedText.length);
+                            break;
+                            
+                        case 'k':
+                            e.preventDefault();
+                            formattedText = '`' + selectedText + '`';
+                            this.value = this.value.substring(0, start) + formattedText + this.value.substring(end);
+                            this.focus();
+                            this.setSelectionRange(start + 1, start + 1 + selectedText.length);
+                            break;
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>

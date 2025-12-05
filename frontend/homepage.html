@@ -1,47 +1,862 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Q&A – Home</title>
+    <title>Q&A HUB</title>
 
-    <!-- Bootstrap -->
+    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #FF6B35;  /* Oranye */
+            --secondary-color: #333333; /* Hitam gelap */
+            --accent-color: #FFA726;   /* Oranye lebih terang */
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --light-text: #666666;
+            --border-color: #e0e0e0;
+            --success-color: #28a745;
+            --card-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark-text);
+            background-color: #fafafa;
+            line-height: 1.6;
+        }
+        
+        /* Navbar */
+        .navbar {
+            background-color: var(--secondary-color) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 0.8rem 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color) !important;
+            font-size: 1.5rem;
+        }
+        
+        .navbar-brand i {
+            color: var(--primary-color);
+        }
+        
+        .nav-search {
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            padding-left: 1rem;
+            max-width: 400px;
+        }
+        
+        .nav-search:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e55a2b;
+            border-color: #e55a2b;
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        /* Main Container */
+        .main-container {
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* Page Header */
+        .page-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .page-header h1 {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+        
+        .page-subtitle {
+            color: var(--light-text);
+            font-size: 1rem;
+        }
+        
+        /* Question Cards */
+        .question-card {
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+            transition: all 0.2s ease;
+            background-color: white;
+        }
+        
+        .question-card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+            border-color: var(--primary-color);
+        }
+        
+        .question-card .card-body {
+            padding: 1.25rem;
+        }
+        
+        .question-title {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+            font-size: 1.1rem;
+        }
+        
+        .question-title:hover {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .question-excerpt {
+            color: var(--light-text);
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+        
+        .question-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .question-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .question-tag {
+            background-color: #FFF3E0;
+            color: var(--primary-color);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .question-stats {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--light-text);
+        }
+        
+        .stat-item i {
+            font-size: 0.85rem;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .username {
+            font-weight: 500;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+        
+        .post-time {
+            color: var(--light-text);
+            font-size: 0.8rem;
+        }
+        
+        /* Sidebar */
+        .sidebar-card {
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+            background-color: white;
+        }
+        
+        .sidebar-card .card-body {
+            padding: 1.25rem;
+        }
+        
+        .sidebar-title {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        /* Stats Box */
+        .stats-box {
+            background: linear-gradient(135deg, var(--primary-color), #FF8A3D);
+            color: white;
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .stats-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .stats-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        
+        /* Category List */
+        .category-list {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+        
+        .category-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .category-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .category-list a {
+            color: var(--dark-text);
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+        
+        .category-list a:hover {
+            color: var(--primary-color);
+        }
+        
+        .category-count {
+            background-color: var(--light-bg);
+            color: var(--light-text);
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+        }
+        
+        /* Trending Questions */
+        .trending-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .trending-item:last-child {
+            border-bottom: none;
+        }
+        
+        .trending-number {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-right: 0.75rem;
+            font-size: 1rem;
+            min-width: 20px;
+        }
+        
+        .trending-title {
+            font-weight: 500;
+            color: var(--dark-text);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .trending-title:hover {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--secondary-color);
+            color: #ccc;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-brand {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            border-top: 1px solid #444;
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+            color: #999;
+            font-size: 0.85rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-search {
+                margin-bottom: 1rem;
+                max-width: 100%;
+            }
+            
+            .question-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .question-stats {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .main-container {
+                margin-top: 1rem;
+            }
+        }
+        
+        /* Active states */
+        .active-category {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .active-category .category-count {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Badges */
+        .badge-solved {
+            background-color: #e8f5e9;
+            color: var(--success-color);
+            font-size: 0.7rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+        }
+        
+        /* Simple animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
 </head>
 
-<body class="bg-light">
+<body>
 
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand fw-bold text-secondary" href="#">Q&A Simple</a>
-
-            <div class="ms-auto">
-                <a href="question.html " class="btn btn-secondary">Ask Question</a>
-                <a href="profil.html" class="btn btn-outline-secondary ms-2">Profile</a>
+            <a class="navbar-brand" href="#"><i class="fas fa-question-circle me-2"></i>Q&A HUB</a>
+            
+            <!-- Search Bar -->
+            <form class="d-flex mx-auto">
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-0"><i class="fas fa-search text-muted"></i></span>
+                    <input type="search" class="form-control border-0" placeholder="Cari pertanyaan atau topik...">
+                </div>
+            </form>
+            
+            <!-- User Menu -->
+            <div class="d-flex align-items-center">
+                <a href="question.html" class="btn btn-primary me-2"><i class="fas fa-plus me-2"></i>Tanya</a>
+                <div class="dropdown">
+                    <button class="btn btn-outline-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://ui-avatars.com/api/?name=Dewa&background=FF6B35&color=fff&size=28" class="rounded-circle me-1" alt="User">
+                        Dewa
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user me-2"></i>Profil Saya</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-question-circle me-2"></i>Pertanyaan Saya</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-comments me-2"></i>Jawaban Saya</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Pengaturan</a></li>
+                        <li><a class="dropdown-item" href="index.html"><i class="fas fa-sign-out-alt me-2"></i>Keluar</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
 
-    <div class="container mt-4">
-        <h3 class="mb-3 text-secondary">Latest Questions</h3>
-
-        <!-- Question List -->
-        <div class="card mb-3 border-0 shadow-sm">
-            <div class="card-body">
-                <h5><a href="question.html" class="text-secondary text-decoration-none">Bagaimana cara menggunakan Bootstrap?</a></h5>
-                <small class="text-muted">Posted by Dewa • 2 hours ago</small>
+    <!-- MAIN CONTENT -->
+    <div class="container main-container">
+        <div class="row">
+            <!-- Main Content Column -->
+            <div class="col-lg-8">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1>Pertanyaan Terbaru</h1>
+                    <p class="page-subtitle">Temukan solusi dari komunitas developer Indonesia</p>
+                </div>
+                
+                <!-- Question List -->
+                <div class="fade-in">
+                    <!-- Question 1 -->
+                    <div class="card question-card">
+                        <div class="card-body">
+                            <div class="question-tags">
+                                <span class="question-tag">Bootstrap</span>
+                                <span class="question-tag">CSS</span>
+                                <span class="question-tag">Responsive</span>
+                            </div>
+                            <h5 class="question-title"><a href="pertanyaan.html">Bagaimana cara menggunakan Bootstrap untuk membuat website responsif?</a></h5>
+                            <p class="question-excerpt">Saya baru belajar Bootstrap dan ingin membuat layout yang bisa menyesuaikan dengan berbagai ukuran layar. Apakah ada contoh praktis yang bisa diikuti?</p>
+                            
+                            <div class="question-meta">
+                                <div class="question-stats">
+                                    <div class="stat-item">
+                                        <i class="fas fa-eye"></i>
+                                        <span>1.2k dilihat</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <i class="fas fa-comments"></i>
+                                        <span>24 jawaban</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <i class="fas fa-check text-success"></i>
+                                        <span>Terselesaikan</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="user-info">
+                                    <img src="https://ui-avatars.com/api/?name=Dewa&background=333333&color=FF6B35&size=28" alt="Dewa" class="user-avatar">
+                                    <div>
+                                        <div class="username">Dewa</div>
+                                        <div class="post-time">2 jam yang lalu</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 2 -->
+                    <div class="card question-card">
+                        <div class="card-body">
+                            <div class="question-tags">
+                                <span class="question-tag">JavaScript</span>
+                                <span class="question-tag">DOM</span>
+                                <span class="question-tag">Event</span>
+                            </div>
+                            <h5 class="question-title"><a href="pertanyaan.html">Apa perbedaan antara addEventListener dan onclick di JavaScript?</a></h5>
+                            <p class="question-excerpt">Saya bingung kapan harus menggunakan addEventListener dan kapan cukup menggunakan onclick. Mana yang lebih baik untuk proyek modern?</p>
+                            
+                            <div class="question-meta">
+                                <div class="question-stats">
+                                    <div class="stat-item">
+                                        <i class="fas fa-eye"></i>
+                                        <span>845 dilihat</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <i class="fas fa-comments"></i>
+                                        <span>18 jawaban</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="user-info">
+                                    <img src="https://ui-avatars.com/api/?name=Alex&background=666666&color=fff&size=28" alt="Alex" class="user-avatar">
+                                    <div>
+                                        <div class="username">Alex</div>
+                                        <div class="post-time">Kemarin</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 3 -->
+                    <div class="card question-card">
+                        <div class="card-body">
+                            <div class="question-tags">
+                                <span class="question-tag">PHP</span>
+                                <span class="question-tag">Database</span>
+                                <span class="question-tag">MySQL</span>
+                            </div>
+                            <h5 class="question-title"><a href="pertanyaan.html">Cara menghubungkan PHP dengan database MySQL yang aman?</a></h5>
+                            <p class="question-excerpt">Saya ingin membuat sistem login dengan PHP dan MySQL. Bagaimana cara koneksi yang aman dan mencegah SQL injection?</p>
+                            
+                            <div class="question-meta">
+                                <div class="question-stats">
+                                    <div class="stat-item">
+                                        <i class="fas fa-eye"></i>
+                                        <span>2.5k dilihat</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <i class="fas fa-comments"></i>
+                                        <span>37 jawaban</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <i class="fas fa-check text-success"></i>
+                                        <span>Terselesaikan</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="user-info">
+                                    <img src="https://ui-avatars.com/api/?name=Sari&background=FF6B35&color=fff&size=28" alt="Sari" class="user-avatar">
+                                    <div>
+                                        <div class="username">Sari</div>
+                                        <div class="post-time">3 hari yang lalu</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Question 4 -->
+                    <div class="card question-card">
+                        <div class="card-body">
+                            <div class="question-tags">
+                                <span class="question-tag">React</span>
+                                <span class="question-tag">Frontend</span>
+                                <span class="question-tag">State</span>
+                            </div>
+                            <h5 class="question-title"><a href="pertanyaan.html">Kapan menggunakan useState vs useReducer di React?</a></h5>
+                            <p class="question-excerpt">Saya sedang belajar React Hooks dan bingung menentukan kapan sebaiknya menggunakan useState dan kapan useReducer lebih tepat.</p>
+                            
+                            <div class="question-meta">
+                                <div class="question-stats">
+                                    <div class="stat-item">
+                                        <i class="fas fa-eye"></i>
+                                        <span>1.8k dilihat</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <i class="fas fa-comments"></i>
+                                        <span>15 jawaban</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="user-info">
+                                    <img src="https://ui-avatars.com/api/?name=Rizki&background=333333&color=FF6B35&size=28" alt="Rizki" class="user-avatar">
+                                    <div>
+                                        <div class="username">Rizki</div>
+                                        <div class="post-time">5 hari yang lalu</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pagination -->
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Sebelumnya</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Selanjutnya</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            
+            <!-- Sidebar Column -->
+            <div class="col-lg-4">
+                <!-- Stats Overview -->
+                <div class="stats-box">
+                    <div class="stats-number">8,245</div>
+                    <div class="stats-label">Pertanyaan Terjawab</div>
+                    <div class="row mt-3">
+                        <div class="col-6">
+                            <div class="stats-number">542</div>
+                            <div class="stats-label">Pengguna Aktif</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="stats-number">124</div>
+                            <div class="stats-label">Expert Online</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Categories -->
+                <div class="sidebar-card">
+                    <div class="card-body">
+                        <h5 class="sidebar-title">Kategori Populer</h5>
+                        
+                        <ul class="category-list">
+                            <li>
+                                <a href="#" class="active-category">
+                                    <span>Web Development</span>
+                                    <span class="category-count">324</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>JavaScript</span>
+                                    <span class="category-count">287</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>PHP & MySQL</span>
+                                    <span class="category-count">156</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>CSS & Design</span>
+                                    <span class="category-count">132</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>React & Vue</span>
+                                    <span class="category-count">98</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>Database</span>
+                                    <span class="category-count">76</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>Git & Deployment</span>
+                                    <span class="category-count">54</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Trending Questions -->
+                <div class="sidebar-card">
+                    <div class="card-body">
+                        <h5 class="sidebar-title">Trending Hari Ini</h5>
+                        
+                        <div class="mt-2">
+                            <div class="trending-item">
+                                <div class="trending-number">1</div>
+                                <a href="#" class="trending-title">Cara deploy website gratis dengan GitHub Pages</a>
+                            </div>
+                            <div class="trending-item">
+                                <div class="trending-number">2</div>
+                                <a href="#" class="trending-title">Perbedaan arrow function dan regular function di JS</a>
+                            </div>
+                            <div class="trending-item">
+                                <div class="trending-number">3</div>
+                                <a href="#" class="trending-title">Setup pertama Laravel untuk pemula</a>
+                            </div>
+                            <div class="trending-item">
+                                <div class="trending-number">4</div>
+                                <a href="#" class="trending-title">Fix error cors di API REST</a>
+                            </div>
+                            <div class="trending-item">
+                                <div class="trending-number">5</div>
+                                <a href="#" class="trending-title">Optimasi performa website loading cepat</a>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-3 text-center">
+                            <a href="#" class="btn btn-outline-primary btn-sm">Lihat Semua</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Community Stats -->
+                <div class="sidebar-card">
+                    <div class="card-body">
+                        <h5 class="sidebar-title">Statistik Komunitas</h5>
+                        
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Pertanyaan minggu ini</span>
+                            <span class="fw-bold">42</span>
+                        </div>
+                        <div class="progress mb-3" style="height: 6px;">
+                            <div class="progress-bar bg-success" style="width: 75%;"></div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Jawaban minggu ini</span>
+                            <span class="fw-bold">89</span>
+                        </div>
+                        <div class="progress mb-3" style="height: 6px;">
+                            <div class="progress-bar" style="background-color: var(--primary-color); width: 90%;"></div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Anggota baru</span>
+                            <span class="fw-bold">23</span>
+                        </div>
+                        <div class="progress" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="card mb-3 border-0 shadow-sm">
-            <div class="card-body">
-                <h5><a href="question.html" class="text-secondary text-decoration-none">Apa itu MVC dalam Web Development?</a></h5>
-                <small class="text-muted">Posted by Guest • yesterday</small>
-            </div>
-        </div>
-
     </div>
 
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <a href="#" class="footer-brand"><i class="fas fa-question-circle me-2"></i>TanyaJawab</a>
+                    <p class="text-muted small mt-2">Komunitas tanya jawab untuk developer Indonesia. Saling berbagi pengetahuan dan solusi coding.</p>
+                    <div class="mt-3">
+                        <a href="#" class="text-muted me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-muted me-3"><i class="fab fa-github"></i></a>
+                        <a href="#" class="text-muted"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h6 class="text-white mb-3">Tautan</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Beranda</a></li>
+                        <li><a href="#">Pertanyaan</a></li>
+                        <li><a href="#">Kategori</a></li>
+                        <li><a href="#">Anggota</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-4 mb-4 mb-md-0">
+                    <h6 class="text-white mb-3">Bantuan</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Cara Bertanya</a></li>
+                        <li><a href="#">Panduan Komunitas</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Kontak</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-4">
+                    <h6 class="text-white mb-3">Legal</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                        <li><a href="#">Syarat Layanan</a></li>
+                        <li><a href="#">Kebijakan Cookie</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright text-center">
+                <p class="mb-0">&copy; 2023 TanyaJawab. Dibuat dengan <i class="fas fa-heart text-danger"></i> untuk developer Indonesia</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Simple interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effect to question cards
+            const questionCards = document.querySelectorAll('.question-card');
+            questionCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+            
+            // Category active state
+            const categoryLinks = document.querySelectorAll('.category-list a');
+            categoryLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    categoryLinks.forEach(item => item.classList.remove('active-category'));
+                    this.classList.add('active-category');
+                });
+            });
+            
+            // Search form submission
+            const searchForm = document.querySelector('.nav-search').closest('form');
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const searchTerm = this.querySelector('input').value;
+                if (searchTerm.trim() !== '') {
+                    alert(`Mencari: "${searchTerm}" - Fitur pencarian akan diimplementasikan`);
+                    // In real implementation, you would redirect to search results page
+                }
+            });
+        });
+    </script>
 </body>
 </html>

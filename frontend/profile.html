@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Dewa - TanyaJawab</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #FF6B35;  /* Oranye */
+            --secondary-color: #333333; /* Hitam gelap */
+            --accent-color: #FFA726;   /* Oranye lebih terang */
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --light-text: #666666;
+            --border-color: #e0e0e0;
+            --success-color: #28a745;
+            --card-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark-text);
+            background-color: #fafafa;
+            line-height: 1.6;
+        }
+        
+        /* Navbar */
+        .navbar {
+            background-color: var(--secondary-color) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 0.8rem 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color) !important;
+            font-size: 1.5rem;
+        }
+        
+        .navbar-brand i {
+            color: var(--primary-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e55a2b;
+            border-color: #e55a2b;
+        }
+        
+        /* Profile Header */
+        .profile-header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            object-fit: cover;
+            background-color: white;
+        }
+        
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .profile-title {
+            font-size: 1rem;
+            color: #ccc;
+            margin-bottom: 0.75rem;
+        }
+        
+        .profile-badges {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        
+        .badge-item {
+            background-color: rgba(255, 107, 53, 0.2);
+            color: var(--primary-color);
+            padding: 0.3rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            color: var(--primary-color);
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: #bbb;
+        }
+        
+        /* Content Cards */
+        .content-card {
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+            background-color: white;
+        }
+        
+        .content-card .card-body {
+            padding: 1.25rem;
+        }
+        
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 1.25rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        /* Tabs */
+        .profile-tabs {
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .nav-tabs .nav-link {
+            border: none;
+            color: var(--light-text);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 0;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary-color);
+            background-color: transparent;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        /* Activity Items */
+        .activity-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            background-color: #FFF3E0;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            float: left;
+        }
+        
+        .activity-content {
+            overflow: hidden;
+        }
+        
+        .activity-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        .activity-title a {
+            color: var(--dark-text);
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+        
+        .activity-title a:hover {
+            color: var(--primary-color);
+        }
+        
+        .activity-meta {
+            display: flex;
+            gap: 0.75rem;
+            font-size: 0.8rem;
+            color: var(--light-text);
+            margin-bottom: 0.25rem;
+        }
+        
+        .activity-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .activity-tag {
+            background-color: #f1f5f9;
+            color: var(--dark-text);
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+        }
+        
+        /* Tags */
+        .user-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .tag-item {
+            background-color: #f1f5f9;
+            color: var(--dark-text);
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .tag-item:hover {
+            background-color: #FFF3E0;
+            color: var(--primary-color);
+        }
+        
+        .tag-count {
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.4rem;
+            border-radius: 8px;
+        }
+        
+        /* Edit Profile Button */
+        .edit-profile-btn {
+            margin-top: 1rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-header {
+                padding: 1.5rem 0;
+            }
+            
+            .profile-avatar {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .profile-name {
+                font-size: 1.3rem;
+            }
+            
+            .profile-stats {
+                gap: 1rem;
+            }
+            
+            .stat-number {
+                font-size: 1.3rem;
+            }
+            
+            .activity-icon {
+                float: none;
+                margin-right: 0;
+                margin-bottom: 0.5rem;
+            }
+            
+            .activity-content {
+                overflow: visible;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="homepage.html"><i class="fas fa-question-circle me-2"></i>Q&A HUB</a>
+            
+            <!-- User Menu -->
+            <div class="d-flex align-items-center">
+                <a href="question.html" class="btn btn-primary me-2"><i class="fas fa-plus me-2"></i>Tanya</a>
+                <div class="dropdown">
+                    <button class="btn btn-outline-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://ui-avatars.com/api/?name=Dewa&background=FF6B35&color=fff&size=28" class="rounded-circle me-1" alt="User">
+                        Dewa
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="homepage.html"><i class="fas fa-home me-2"></i>Home</a></li>
+                        <li><a class="dropdown-item" href="question.html"><i class="fas fa-question-circle me-2"></i>Pertanyaan</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-comments me-2"></i>Jawaban Saya</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Pengaturan</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Keluar</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PROFILE HEADER -->
+    <div class="profile-header">
+        <div class="container">
+            <div class="text-center">
+                <img src="https://ui-avatars.com/api/?name=Dewa&background=ffffff&color=FF6B35&size=100&bold=true" class="profile-avatar mb-3" alt="Dewa">
+                
+                <h1 class="profile-name">Dewa</h1>
+                <div class="profile-title">Full Stack Developer</div>
+                
+                <div class="profile-badges">
+                    <div class="badge-item">
+                        <i class="fas fa-medal"></i>
+                        <span>Anggota Gold</span>
+                    </div>
+                    <div class="badge-item">
+                        <i class="fas fa-star"></i>
+                        <span>Kontributor Top</span>
+                    </div>
+                </div>
+                
+                <div class="d-flex flex-wrap gap-3 justify-content-center">
+                    <span><i class="fas fa-map-marker-alt me-1"></i> Jakarta, Indonesia</span>
+                    <span><i class="fas fa-calendar-alt me-1"></i> Anggota sejak 2022</span>
+                </div>
+                
+                <div class="edit-profile-btn">
+                    <button class="btn btn-light btn-sm">
+                        <i class="fas fa-edit me-1"></i> Edit Profil
+                    </button>
+                </div>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <div class="stat-number">2,847</div>
+                    <div class="stat-label">Reputasi</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">124</div>
+                    <div class="stat-label">Pertanyaan</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">348</div>
+                    <div class="stat-label">Jawaban</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">42</div>
+                    <div class="stat-label">Diterima</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <!-- Profile Tabs -->
+        <ul class="nav nav-tabs profile-tabs" id="profileTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="activity-tab" data-bs-toggle="tab" data-bs-target="#activity" type="button" role="tab">
+                    <i class="fas fa-history me-1"></i>Aktivitas
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="questions-tab" data-bs-toggle="tab" data-bs-target="#questions" type="button" role="tab">
+                    <i class="fas fa-question-circle me-1"></i>Pertanyaan
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="answers-tab" data-bs-toggle="tab" data-bs-target="#answers" type="button" role="tab">
+                    <i class="fas fa-comments me-1"></i>Jawaban
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tags-tab" data-bs-toggle="tab" data-bs-target="#tags" type="button" role="tab">
+                    <i class="fas fa-tags me-1"></i>Tags
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="profileTabContent">
+            <!-- Activity Tab -->
+            <div class="tab-pane fade show active" id="activity" role="tabpanel">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="content-card">
+                            <div class="card-header">
+                                <i class="fas fa-history me-2"></i> Aktivitas Terbaru
+                            </div>
+                            <div class="card-body">
+                                <!-- Activity Item 1 -->
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-question"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">
+                                            <a href="pertanyaan.html">Bertanya: Bagaimana cara menggunakan Bootstrap untuk membuat website responsif?</a>
+                                        </div>
+                                        <div class="activity-meta">
+                                            <span>2 jam yang lalu</span>
+                                            <span>•</span>
+                                            <span>1.2k dilihat</span>
+                                            <span>•</span>
+                                            <span>24 jawaban</span>
+                                        </div>
+                                        <div class="activity-tags">
+                                            <span class="activity-tag">Bootstrap</span>
+                                            <span class="activity-tag">CSS</span>
+                                            <span class="activity-tag">Responsive</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Activity Item 2 -->
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-comment"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">
+                                            <a href="pertanyaan.html">Menjawab: Apa perbedaan antara addEventListener dan onclick di JavaScript?</a>
+                                        </div>
+                                        <div class="activity-meta">
+                                            <span>5 jam yang lalu</span>
+                                            <span>•</span>
+                                            <span>+25 reputasi</span>
+                                        </div>
+                                        <div class="activity-tags">
+                                            <span class="activity-tag">JavaScript</span>
+                                            <span class="activity-tag">DOM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Activity Item 3 -->
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">
+                                            <a href="pertanyaan.html">Jawaban diterima: Cara menghubungkan PHP dengan database MySQL yang aman?</a>
+                                        </div>
+                                        <div class="activity-meta">
+                                            <span>1 hari yang lalu</span>
+                                            <span>•</span>
+                                            <span>+15 reputasi</span>
+                                        </div>
+                                        <div class="activity-tags">
+                                            <span class="activity-tag">PHP</span>
+                                            <span class="activity-tag">MySQL</span>
+                                            <span class="activity-tag">Database</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Activity Item 4 -->
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-edit"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">
+                                            <a href="pertanyaan.html">Mengedit pertanyaan: Kapan menggunakan useState vs useReducer di React?</a>
+                                        </div>
+                                        <div class="activity-meta">
+                                            <span>2 hari yang lalu</span>
+                                        </div>
+                                        <div class="activity-tags">
+                                            <span class="activity-tag">React</span>
+                                            <span class="activity-tag">Hooks</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Activity Item 5 -->
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-vote-yea"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">
+                                            Memberi vote: "Cara deploy website gratis dengan GitHub Pages"
+                                        </div>
+                                        <div class="activity-meta">
+                                            <span>3 hari yang lalu</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sidebar -->
+                    <div class="col-lg-4">
+                        <!-- Bio -->
+                        <div class="content-card">
+                            <div class="card-header">
+                                <i class="fas fa-user me-2"></i> Tentang
+                            </div>
+                            <div class="card-body">
+                                <p>Full-stack developer dengan pengalaman 5+ tahun membangun aplikasi web. Passionate tentang clean code dan open-source.</p>
+                                
+                                <div class="mt-3">
+                                    <h6 class="mb-2">Keahlian</h6>
+                                    <div class="d-flex flex-wrap gap-1">
+                                        <span class="badge" style="background-color: #FFF3E0; color: var(--primary-color);">JavaScript</span>
+                                        <span class="badge" style="background-color: #FFF3E0; color: var(--primary-color);">React</span>
+                                        <span class="badge" style="background-color: #FFF3E0; color: var(--primary-color);">Node.js</span>
+                                        <span class="badge" style="background-color: #FFF3E0; color: var(--primary-color);">PHP</span>
+                                        <span class="badge" style="background-color: #FFF3E0; color: var(--primary-color);">Bootstrap</span>
+                                        <span class="badge" style="background-color: #FFF3E0; color: var(--primary-color);">MySQL</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-3">
+                                    <h6 class="mb-2">Ketersediaan</h6>
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-2" style="width: 10px; height: 10px; border-radius: 50%; background-color: var(--success-color);"></div>
+                                        <span>Tersedia untuk mentoring</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Top Tags -->
+                        <div class="content-card">
+                            <div class="card-header">
+                                <i class="fas fa-tags me-2"></i> Top Tags
+                            </div>
+                            <div class="card-body">
+                                <div class="user-tags">
+                                    <a href="#" class="tag-item">
+                                        <span>bootstrap</span>
+                                        <span class="tag-count">42</span>
+                                    </a>
+                                    <a href="#" class="tag-item">
+                                        <span>javascript</span>
+                                        <span class="tag-count">38</span>
+                                    </a>
+                                    <a href="#" class="tag-item">
+                                        <span>react</span>
+                                        <span class="tag-count">31</span>
+                                    </a>
+                                    <a href="#" class="tag-item">
+                                        <span>css</span>
+                                        <span class="tag-count">28</span>
+                                    </a>
+                                    <a href="#" class="tag-item">
+                                        <span>php</span>
+                                        <span class="tag-count">24</span>
+                                    </a>
+                                    <a href="#" class="tag-item">
+                                        <span>mysql</span>
+                                        <span class="tag-count">18</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Community Impact -->
+                        <div class="content-card">
+                            <div class="card-header">
+                                <i class="fas fa-hands-helping me-2"></i> Dampak Komunitas
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>Pertanyaan terbantu</span>
+                                        <span class="fw-bold">84</span>
+                                    </div>
+                                    <div class="progress" style="height: 6px;">
+                                        <div class="progress-bar bg-success" style="width: 85%;"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>Edit disarankan</span>
+                                        <span class="fw-bold">42</span>
+                                    </div>
+                                    <div class="progress" style="height: 6px;">
+                                        <div class="progress-bar" style="background-color: var(--primary-color); width: 65%;"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>Jawaban diterima</span>
+                                        <span class="fw-bold">56</span>
+                                    </div>
+                                    <div class="progress" style="height: 6px;">
+                                        <div class="progress-bar bg-warning" style="width: 75%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Questions Tab -->
+            <div class="tab-pane fade" id="questions" role="tabpanel">
+                <div class="content-card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-question-circle me-2"></i> Pertanyaan Saya (124)
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-outline-secondary active">Terbaru</button>
+                            <button class="btn btn-sm btn-outline-secondary">Populer</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-question"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">
+                                    <a href="pertanyaan.html">Bagaimana cara menggunakan Bootstrap untuk membuat website responsif?</a>
+                                </div>
+                                <div class="activity-meta">
+                                    <span>2 jam yang lalu</span>
+                                    <span>•</span>
+                                    <span>24 jawaban</span>
+                                    <span>•</span>
+                                    <span>1.2k dilihat</span>
+                                </div>
+                                <div class="activity-tags">
+                                    <span class="activity-tag">Bootstrap</span>
+                                    <span class="activity-tag">CSS</span>
+                                    <span class="activity-tag">Responsive</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-question"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">
+                                    <a href="pertanyaan.html">Apa perbedaan antara addEventListener dan onclick di JavaScript?</a>
+                                </div>
+                                <div class="activity-meta">
+                                    <span>2 hari yang lalu</span>
+                                    <span>•</span>
+                                    <span>18 jawaban</span>
+                                    <span>•</span>
+                                    <span>845 dilihat</span>
+                                </div>
+                                <div class="activity-tags">
+                                    <span class="activity-tag">JavaScript</span>
+                                    <span class="activity-tag">DOM</span>
+                                    <span class="activity-tag">Event</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-question"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">
+                                    <a href="pertanyaan.html">Cara menghubungkan PHP dengan database MySQL yang aman?</a>
+                                </div>
+                                <div class="activity-meta">
+                                    <span>1 minggu yang lalu</span>
+                                    <span>•</span>
+                                    <span>37 jawaban</span>
+                                    <span>•</span>
+                                    <span>2.5k dilihat</span>
+                                </div>
+                                <div class="activity-tags">
+                                    <span class="activity-tag">PHP</span>
+                                    <span class="activity-tag">MySQL</span>
+                                    <span class="activity-tag">Database</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <button class="btn btn-outline-primary">Muat Lebih Banyak</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Answers Tab -->
+            <div class="tab-pane fade" id="answers" role="tabpanel">
+                <div class="content-card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-comments me-2"></i> Jawaban Saya (348)
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-outline-secondary active">Terbaru</button>
+                            <button class="btn btn-sm btn-outline-secondary">Paling Banyak Vote</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background-color: #e8f5e9; color: var(--success-color);">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">
+                                    <a href="pertanyaan.html">Jawaban: Apa perbedaan antara addEventListener dan onclick di JavaScript?</a>
+                                </div>
+                                <div class="activity-meta">
+                                    <span>5 jam yang lalu</span>
+                                    <span>•</span>
+                                    <span>+8 vote</span>
+                                    <span>•</span>
+                                    <span>Diterima</span>
+                                </div>
+                                <div class="activity-tags">
+                                    <span class="activity-tag">JavaScript</span>
+                                    <span class="activity-tag">DOM</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-comment"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">
+                                    <a href="pertanyaan.html">Jawaban: Kapan menggunakan useState vs useReducer di React?</a>
+                                </div>
+                                <div class="activity-meta">
+                                    <span>1 hari yang lalu</span>
+                                    <span>•</span>
+                                    <span>+15 vote</span>
+                                </div>
+                                <div class="activity-tags">
+                                    <span class="activity-tag">React</span>
+                                    <span class="activity-tag">Hooks</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background-color: #e8f5e9; color: var(--success-color);">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">
+                                    <a href="pertanyaan.html">Jawaban: Cara deploy website gratis dengan GitHub Pages</a>
+                                </div>
+                                <div class="activity-meta">
+                                    <span>3 hari yang lalu</span>
+                                    <span>•</span>
+                                    <span>+24 vote</span>
+                                    <span>•</span>
+                                    <span>Diterima</span>
+                                </div>
+                                <div class="activity-tags">
+                                    <span class="activity-tag">GitHub</span>
+                                    <span class="activity-tag">Deployment</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <button class="btn btn-outline-primary">Muat Lebih Banyak</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tags Tab -->
+            <div class="tab-pane fade" id="tags" role="tabpanel">
+                <div class="content-card">
+                    <div class="card-header">
+                        <i class="fas fa-tags me-2"></i> Tags yang Sering Digunakan
+                    </div>
+                    <div class="card-body">
+                        <div class="user-tags mb-4">
+                            <a href="#" class="tag-item">
+                                <span>bootstrap</span>
+                                <span class="tag-count">42 pertanyaan</span>
+                            </a>
+                            <a href="#" class="tag-item">
+                                <span>javascript</span>
+                                <span class="tag-count">38 pertanyaan</span>
+                            </a>
+                            <a href="#" class="tag-item">
+                                <span>react</span>
+                                <span class="tag-count">31 pertanyaan</span>
+                            </a>
+                            <a href="#" class="tag-item">
+                                <span>css</span>
+                                <span class="tag-count">28 pertanyaan</span>
+                            </a>
+                            <a href="#" class="tag-item">
+                                <span>php</span>
+                                <span class="tag-count">24 pertanyaan</span>
+                            </a>
+                            <a href="#" class="tag-item">
+                                <span>web-development</span>
+                                <span class="tag-count">22 pertanyaan</span>
+                            </a>
+                            <a href="#" class="tag-item">
+                                <span>mysql</span>
+                                <span class="tag-count">18 pertanyaan</span>
+                            </a>
+                            <a href="#" class="tag-item">
+                                <span>responsive-design</span>
+                                <span class="tag-count">15 pertanyaan</span>
+                            </a>
+                        </div>
+                        
+                        <h6 class="mb-3">Distribusi Skor Tag</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>Bootstrap</span>
+                                        <span class="fw-bold">1,240 skor</span>
+                                    </div>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar" style="background-color: var(--primary-color); width: 85%;"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>JavaScript</span>
+                                        <span class="fw-bold">980 skor</span>
+                                    </div>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar" style="background-color: var(--primary-color); width: 70%;"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>React</span>
+                                        <span class="fw-bold">845 skor</span>
+                                    </div>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar" style="background-color: var(--primary-color); width: 60%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>CSS</span>
+                                        <span class="fw-bold">720 skor</span>
+                                    </div>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar" style="background-color: var(--primary-color); width: 50%;"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>PHP</span>
+                                        <span class="fw-bold">640 skor</span>
+                                    </div>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar" style="background-color: var(--primary-color); width: 45%;"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>MySQL</span>
+                                        <span class="fw-bold">520 skor</span>
+                                    </div>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar" style="background-color: var(--primary-color); width: 35%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2023 TanyaJawab. Komunitas developer Indonesia.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-white me-3">Kebijakan Privasi</a>
+                    <a href="#" class="text-white">Syarat Layanan</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching
+            const tabLinks = document.querySelectorAll('.nav-tabs .nav-link');
+            tabLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    tabLinks.forEach(item => item.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Load more buttons
+            const loadMoreButtons = document.querySelectorAll('.btn-outline-primary');
+            loadMoreButtons.forEach(button => {
+                if (button.textContent.includes('Muat Lebih Banyak')) {
+                    button.addEventListener('click', function() {
+                        const originalText = this.textContent;
+                        this.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Memuat...';
+                        this.disabled = true;
+                        
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                            this.disabled = false;
+                            alert('Konten tambahan akan dimuat di sini');
+                        }, 1000);
+                    });
+                }
+            });
+            
+            // Edit profile button
+            const editProfileBtn = document.querySelector('.edit-profile-btn button');
+            if (editProfileBtn) {
+                editProfileBtn.addEventListener('click', function() {
+                    alert('Fitur edit profil akan dibuka di sini');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

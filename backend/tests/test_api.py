@@ -1,4 +1,3 @@
-# backend/tests/test_api.py
 import pytest
 from app import app
 
